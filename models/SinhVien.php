@@ -26,24 +26,21 @@ class SinhVien {
     }
 
     public function create($data) {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM NganhHoc WHERE MaNganh = :MaNganh");
-        $stmt->bindParam(':MaNganh', $data['MaNganh']);
-        $stmt->execute();
-        $count = $stmt->fetchColumn();
-
-        if ($count == 0) {
-            throw new Exception("Mã ngành không tồn tại!");
-        }
-
-        $stmt = $this->conn->prepare("INSERT INTO SinhVien (MaSV, HoTen, GioiTinh, NgaySinh, Hinh, MaNganh) VALUES (:MaSV, :HoTen, :GioiTinh, :NgaySinh, :Hinh, :MaNganh)");
+        $query = "INSERT INTO sinhvien (MaSV, HoTen, GioiTinh, NgaySinh, Hinh, MaNganh) 
+                  VALUES (:MaSV, :HoTen, :GioiTinh, :NgaySinh, :Hinh, :MaNganh)";
+        
+        $stmt = $this->conn->prepare($query);
+    
         $stmt->bindParam(':MaSV', $data['MaSV']);
         $stmt->bindParam(':HoTen', $data['HoTen']);
         $stmt->bindParam(':GioiTinh', $data['GioiTinh']);
         $stmt->bindParam(':NgaySinh', $data['NgaySinh']);
-        $stmt->bindParam(':Hinh', $data['Hinh']);
+        $stmt->bindParam(':Hinh', $data['Hinh']); // Lưu đường dẫn ảnh vào database
         $stmt->bindParam(':MaNganh', $data['MaNganh']);
+    
         return $stmt->execute();
     }
+    
 
     public function update($data) {
         $stmt = $this->conn->prepare("SELECT COUNT(*) FROM NganhHoc WHERE MaNganh = :MaNganh");

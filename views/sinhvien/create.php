@@ -17,9 +17,14 @@
             </a>
         </div>
 
-        <form action="index.php?controller=sinhvien&action=store" method="POST" enctype="multipart/form-data">
-            <div class="card">
-                <div class="card-body">
+        <!-- Hiển thị lỗi nếu có -->
+        <?php if (!empty($error)) { ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php } ?>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Mã SV</label>
                         <input type="text" class="form-control" name="MaSV" required>
@@ -41,20 +46,27 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Hình Ảnh</label>
-                        <input type="file" class="form-control" name="Hinh" accept="image/*">
+                        <input type="file" class="form-control" name="Hinh" accept="image/*" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mã Ngành</label>
-                        <input type="text" class="form-control" name="MaNganh" required>
+                        <select class="form-select" name="MaNganh" required>
+                            <option value="">Chọn mã ngành</option>
+                            <?php foreach ($nganhHoc as $nganh) { ?>
+                                <option value="<?php echo $nganh['MaNganh']; ?>">
+                                    <?php echo $nganh['MaNganh'] . ' - ' . $nganh['TenNganh']; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Lưu
+                        <i class="fas fa-save"></i> Thêm Sinh Viên
                     </button>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

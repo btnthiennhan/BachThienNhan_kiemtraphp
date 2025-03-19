@@ -3,7 +3,6 @@ session_start(); // Khởi động session một lần duy nhất ở đây
 
 require_once 'config/Database.php';
 require_once 'controllers/SinhVienController.php';
-require_once 'controllers/HocPhanController.php';
 
 
 error_reporting(E_ALL);
