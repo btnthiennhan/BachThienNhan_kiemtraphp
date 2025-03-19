@@ -16,7 +16,12 @@
             </a>
         </div>
 
-        <form action="index.php?controller=sinhvien&action=update&MaSV=<?php echo $sinhVien['MaSV']; ?>" method="POST" enctype="multipart/form-data">
+        <!-- Hiển thị lỗi nếu có -->
+        <?php if (!empty($error)) { ?>
+            <div class="alert alert-danger"> <?php echo $error; ?> </div>
+        <?php } ?>
+
+        <form method="POST" enctype="multipart/form-data">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -45,7 +50,14 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mã Ngành</label>
-                        <input type="text" class="form-control" name="MaNganh" value="<?php echo $sinhVien['MaNganh']; ?>" required>
+                        <select class="form-select" name="MaNganh" required>
+                            <option value="">Chọn mã ngành</option>
+                            <?php foreach ($nganhHoc as $nganh) { ?>
+                                <option value="<?php echo $nganh['MaNganh']; ?>" <?php echo ($sinhVien['MaNganh'] == $nganh['MaNganh']) ? 'selected' : ''; ?>>
+                                    <?php echo $nganh['MaNganh'] . ' - ' . $nganh['TenNganh']; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Cập Nhật
